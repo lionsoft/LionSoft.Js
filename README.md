@@ -34,9 +34,13 @@ Two setup options are available:
 
 As soon as you've got all the files downloaded you just need to include the only file `LionSoft.Js-{version}.js` on your page or `BundleConfig.RegisterBundles`. All others files of the library will be loaded automatically.
 
-All the details you can read on the project documentation site.
+All the details you can read on the project [documentation site](https://github.com/lionsoft/LionSoft.Js/wiki/LionSoft.Js-Documentation).
 
 *Please see the `/sample` app for a more detailed code example of how to use the library.*
+
+## Documentation
+
+All the [project documentation](https://github.com/lionsoft/LionSoft.Js/wiki/LionSoft.Js-Documentation) is awailable on the [Project Wiki](https://github.com/lionsoft/LionSoft.Js/wiki/LionSoft.Js-Documentation).
 
 ## Authors
 
