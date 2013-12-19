@@ -1,5 +1,5 @@
 # LionSoft.Js
-==============
+
 
 This is a custom library of the javascript extensions.
 
@@ -14,24 +14,24 @@ The most of the code is based on `TypeScript` sources with their `JavaScript` an
 Recommended for using in `VisualStudio` (otherwise you don't need this library).
 
 ## Features
-=====
+
  * Dynamic loading scripts by two methods (sync and async).
  * Standard methods for working with strings. Implementation of the `String.cs`.
  * Sync'd row position across orientation changes.
  * _To be continue..._
 
 ## Dependencies
-=====
+
     No dependencies.
 
 ## Setup
-=====
+
 Two setup options are available:
  1. Install from `NuGet` or
  2. [Download the latest release](https://github.com/lionsoft/LionSoft.Js/archive/master.zip) from GitHub.
 
 ## Usage
-=====
+
 As soon as you've got all the files downloaded you just need to include the only file `LionSoft.Js-{version}.js` on your page or `BundleConfig.RegisterBundles`. All others files of the library will be loaded automatically.
 
 All the details you can read on the project documentation site.
