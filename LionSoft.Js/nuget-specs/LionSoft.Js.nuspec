@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<metadata>
+    <id>LionSoft.Js</id>
+    <version>0.1.1</version>
+    <authors>LionSoft</authors>
+    <owners>LionSoft</owners>
+    <projectUrl>https://github.com/lionsoft/LionSoft.Js</projectUrl>
+    <iconUrl>http://aelitsoft.com/aelit_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>JavaScript framework for ASP.NET and ASP.NET MVC.</description>
+    <releaseNotes />
+    <copyright>Copyright 2013</copyright>
+    <language />
+    <tags>ASP.NET MVC JavaScript .NET JsLion</tags>
+
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\nuget-packages\content\Scripts\LionSoft.Js\**\*.*" target="content\Scripts\LionSoft.Js" />
+    <file src="..\nuget-packages\tools\*.*" target="tools" />
+    <file src="..\nuget-packages\tools\LionSoft.Js\**\*.*" target="tools" />
+  </files>
+</package>
+
+

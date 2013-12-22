@@ -30,16 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Folder Include="nuget-packages\lib\" />
+    <Folder Include="nuget-packages\src\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\js.net.string.js" />
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\string.format-1.0.js" />
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js.map" />
+    <None Include="nuget-packages\tools\common.ps1" />
+    <None Include="nuget-packages\tools\LionSoft.Js\init.ps1" />
+    <None Include="nuget-packages\tools\LionSoft.Js\install.ps1" />
+    <None Include="nuget-packages\tools\LionSoft.Js\uninstall.ps1" />
+    <None Include="nuget-specs\build.bat" />
+    <None Include="nuget-specs\LionSoft.Js.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
