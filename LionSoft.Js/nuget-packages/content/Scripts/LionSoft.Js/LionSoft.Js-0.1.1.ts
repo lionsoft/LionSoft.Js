@@ -9,10 +9,8 @@ interface Location {
     origin: string;
 }
 
-
 module LionSoftJs {
     'use strict';
-
     /**
        Current root folder of the LionSoft.Js-{version}.js
     */
@@ -192,4 +190,6 @@ module LionSoftJs {
     /* Loading LionSoft.Js framework modules */
     require("js.net-{version}/js.net.string.js");
     require("js.net-{version}/string.format-1.0.js");
+    require("js.net-{version}/js.net.array.js");
+    require("js.net-{version}/js.net.path.js");
 }

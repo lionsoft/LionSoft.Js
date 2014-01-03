@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,6 +12,9 @@
     <AssemblyName>LionSoft.Js</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TypeScriptToolsVersion>0.9</TypeScriptToolsVersion>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,12 +39,18 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\js.net.array.js" />
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\js.net.path.js" />
     <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\js.net.string.js" />
     <Content Include="nuget-packages\content\Scripts\LionSoft.Js\js.net-0.1.1\string.format-1.0.js" />
-    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js" />
+    <Content Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js">
+      <DependentUpon>LionSoft.Js-0.1.1.ts</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js.map" />
+    <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js.map">
+      <DependentUpon>LionSoft.Js-0.1.1.ts</DependentUpon>
+    </None>
     <None Include="nuget-packages\tools\common.ps1" />
     <None Include="nuget-packages\tools\LionSoft.Js\init.ps1" />
     <None Include="nuget-packages\tools\LionSoft.Js\install.ps1" />
@@ -49,9 +59,13 @@
     <None Include="nuget-specs\LionSoft.Js.nuspec" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.d.ts">
+      <DependentUpon>LionSoft.Js-0.1.1.ts</DependentUpon>
+    </None>
     <TypeScriptCompile Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <PropertyGroup>
     <PostBuildEvent>"$(ProjectDir)nuget-specs\build.bat" "$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
