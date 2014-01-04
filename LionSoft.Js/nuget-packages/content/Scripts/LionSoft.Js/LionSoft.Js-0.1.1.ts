@@ -1,8 +1,72 @@
 interface String {
+    /**
+    */
     format(...args: any[]): string;
-    isEqual(str: string, caseInsensitive?: boolean);
-    startsWith(str: string, caseInsensitive?: boolean);
-    endsWith(str: string, caseInsensitive?: boolean);
+
+    /**
+        Checks the current string with the passed one whether they are equals. 
+    */
+    IsEqual(str: string, caseInsensitive?: boolean);
+
+    /**
+        Determines whether the beginning of this string instance matches the specified string. 
+    */
+    StartsWith(str: string, caseInsensitive?: boolean);
+
+    /**
+        Determines whether the end of this string instance matches the specified string. 
+    */
+    EndsWith(str: string, caseInsensitive?: boolean);
+
+    /**
+        Removes all leading and trailing occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    Trim(trimChars?: string);
+
+    /**
+        Removes all leading occurrences of a set of characters specified in a string or an array from the current string. 
+    */
+    TrimLeft(trimChars?: string);
+
+    /**
+        Removes all leading occurrences of a set of characters specified in a string or an array from the current string. 
+    */
+    TrimStart(trimChars?: string);
+
+    /**
+        Removes all trailing occurrences of a set of characters specified in a string or an array from the current string. 
+    */
+    TrimRight(trimChars?: string);
+
+    /**
+        Removes all trailing occurrences of a set of characters specified in a string or an array from the current string. 
+    */
+    TrimEnd(trimChars?: string);
+
+    /**
+        Extracts directory path part from the full file path. 
+    */
+    ExtractDirectory(separator?: string);
+
+    /**
+        Extracts file name path part from the full file path. 
+    */
+    ExtractFileName(separator?: string);
+
+    /**
+        Expand filename with the passed base path.
+
+        If the base path is empty the filename will be expanded from site root origin (if filename starts with '/') 
+        or from current page folder (if filename doesn't start with '/').
+    */
+    ExpnadPath(basePath?: string, separator?: string);
+}
+
+interface Array {
+    /**
+        Make the copy of the source array. 
+    */
+    clone();
 }
 
 interface Location {
@@ -198,10 +262,10 @@ module LionSoftJs {
     // Set window.location.origin
     if (!window.location.origin)
         window.location.origin = window.location.protocol + "//" + window.location.host;
-
+    
     /* Loading LionSoft.Js framework modules */
-    require("js.net-{version}/js.net.string.js");
-    require("js.net-{version}/string.format-1.0.js");
-    require("js.net-{version}/js.net.array.js");
-    require("js.net-{version}/js.net.path.js");
+    require(rootFolder + "js.net-{version}/js.net.string.js");
+    require(rootFolder + "js.net-{version}/string.format-1.0.js");
+    require(rootFolder + "js.net-{version}/js.net.array.js");
+    require(rootFolder + "js.net-{version}/js.net.path.js");
 }

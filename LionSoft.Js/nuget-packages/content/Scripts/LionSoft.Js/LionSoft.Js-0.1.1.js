@@ -183,9 +183,9 @@ var LionSoftJs;
         window.location.origin = window.location.protocol + "//" + window.location.host;
 
     /* Loading LionSoft.Js framework modules */
-    require("js.net-{version}/js.net.string.js");
-    require("js.net-{version}/string.format-1.0.js");
-    require("js.net-{version}/js.net.array.js");
-    require("js.net-{version}/js.net.path.js");
+    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.string.js");
+    require(LionSoftJs.rootFolder + "js.net-{version}/string.format-1.0.js");
+    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.array.js");
+    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.path.js");
 })(LionSoftJs || (LionSoftJs = {}));
 //# sourceMappingURL=LionSoft.Js-0.1.1.js.map

@@ -1,8 +1,60 @@
 interface String {
+    /**
+    */
     format(...args: any[]): string;
-    isEqual(str: string, caseInsensitive?: boolean): any;
-    startsWith(str: string, caseInsensitive?: boolean): any;
-    endsWith(str: string, caseInsensitive?: boolean): any;
+    /**
+    Checks the current string with the passed one whether they are equals.
+    */
+    IsEqual(str: string, caseInsensitive?: boolean): any;
+    /**
+    Determines whether the beginning of this string instance matches the specified string.
+    */
+    StartsWith(str: string, caseInsensitive?: boolean): any;
+    /**
+    Determines whether the end of this string instance matches the specified string.
+    */
+    EndsWith(str: string, caseInsensitive?: boolean): any;
+    /**
+    Removes all leading and trailing occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    Trim(trimChars?: string): any;
+    /**
+    Removes all leading occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    TrimLeft(trimChars?: string): any;
+    /**
+    Removes all leading occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    TrimStart(trimChars?: string): any;
+    /**
+    Removes all trailing occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    TrimRight(trimChars?: string): any;
+    /**
+    Removes all trailing occurrences of a set of characters specified in a string or an array from the current string.
+    */
+    TrimEnd(trimChars?: string): any;
+    /**
+    Extracts directory path part from the full file path.
+    */
+    ExtractDirectory(separator?: string): any;
+    /**
+    Extracts file name path part from the full file path.
+    */
+    ExtractFileName(separator?: string): any;
+    /**
+    Expand filename with the passed base path.
+    
+    If the base path is empty the filename will be expanded from site root origin (if filename starts with '/')
+    or from current page folder (if filename doesn't start with '/').
+    */
+    ExpnadPath(basePath?: string, separator?: string): any;
+}
+interface Array {
+    /**
+    Make the copy of the source array.
+    */
+    clone(): any;
 }
 interface Location {
     origin: string;

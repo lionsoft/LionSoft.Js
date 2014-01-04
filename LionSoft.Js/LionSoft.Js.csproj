@@ -51,12 +51,15 @@
     <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.js.map">
       <DependentUpon>LionSoft.Js-0.1.1.ts</DependentUpon>
     </None>
+    <None Include="nuget-packages\LionSoft.Js.0.1.1.nupkg" />
+    <None Include="nuget-packages\LionSoft.Js.TypeScript.DefinitelyTyped.0.1.1.nupkg" />
     <None Include="nuget-packages\tools\common.ps1" />
     <None Include="nuget-packages\tools\LionSoft.Js\init.ps1" />
     <None Include="nuget-packages\tools\LionSoft.Js\install.ps1" />
     <None Include="nuget-packages\tools\LionSoft.Js\uninstall.ps1" />
     <None Include="nuget-specs\build.bat" />
     <None Include="nuget-specs\LionSoft.Js.nuspec" />
+    <None Include="nuget-specs\LionSoft.Js.TypeScript.DefinitelyTyped.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <None Include="nuget-packages\content\Scripts\LionSoft.Js\LionSoft.Js-0.1.1.d.ts">

@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\nuget-packages\content\Scripts\LionSoft.Js\**\*.*" target="content\Scripts\LionSoft.Js" exclude="**\*.d.ts" />
+    <file src="..\nuget-packages\content\Scripts\LionSoft.Js\**\*.*" target="content\Scripts\LionSoft.Js" exclude="..\nuget-packages\content\Scripts\LionSoft.Js\**\*.d.ts" />
     <file src="..\nuget-packages\tools\*.*" target="tools" />
     <file src="..\nuget-packages\tools\LionSoft.Js\**\*.*" target="tools" />
   </files>
