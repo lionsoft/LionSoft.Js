@@ -10,7 +10,7 @@ interface Location {
 }
 
 module LionSoftJs {
-    'use strict';
+    'use strict';  
     /**
        Current root folder of the LionSoft.Js-{version}.js
     */

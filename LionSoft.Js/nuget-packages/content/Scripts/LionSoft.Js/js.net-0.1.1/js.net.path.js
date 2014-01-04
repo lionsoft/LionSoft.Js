@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
     'use strict';
 
     if (typeof String.prototype.ExtractDirectory != 'function') {
@@ -41,4 +41,3 @@
         };
     }
 }());
-
