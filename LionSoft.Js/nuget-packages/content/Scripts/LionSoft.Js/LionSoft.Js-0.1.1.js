@@ -36,14 +36,34 @@ var LionSoftJs;
     LionSoftJs.getXmlHttp = getXmlHttp;
 
     /**
+    Gets the base path of the current executing script.
+    */
+    function getBasePath() {
+        var scripts = document.getElementsByTagName("script"), src = scripts[scripts.length - 1].src, path = src.split('/');
+
+        var rootFile = path[path.length - 1];
+        var arr = rootFile.split('-');
+        if (arr.length < 2) {
+            LionSoftJs.version = "";
+        } else {
+            LionSoftJs.version = arr[arr.length - 1];
+            LionSoftJs.version = LionSoftJs.version.substring(0, LionSoftJs.version.length - 3); // remove .js extension
+        }
+
+        path[path.length - 1] = "";
+        return path.join('/');
+    }
+    LionSoftJs.getBasePath = getBasePath;
+
+    /**
     Dynamic loads of the js-files via HttpRequest.
     After this call module has been loaded and ready for using. (Unfortunately you won't be able to debug this module).
     Prevents double loading of the module.
     --
     Using:
-    >   1.  jsLion.require("dot.net.string.js") - load script from the dot.net-{version}.js folder.
-    >   2.  jsLion.require("/scripts/myScript1.js", ..., "/scripts/myScriptN.js") - load scripts from the site root folder.
-    >   3.  jsLion.require("http://mysite/app/scripts/myScript1.js") - load scripts from the absolute address.
+    >   1.  LionSoftJs.require("dot.net.string.js") - load script file from the script folder.
+    >   2.  LionSoftJs.require("/scripts/myScript1.js", ..., "/scripts/myScriptN.js") - load script filess from the site root folder.
+    >   3.  LionSoftJs.require("http://mysite/app/scripts/myScript1.js") - load script file from the absolute address.
     
     */
     function require() {
@@ -67,17 +87,17 @@ var LionSoftJs;
                     try  {
                         eval(xhr.responseText);
                     } catch (e) {
-                        console.log("JsLion.require(): Fail on evaluation script '" + script + "'. Error: " + e.message);
+                        console.log("LionSoftJs.require(): Fail on evaluation script '" + script + "'. Error: " + e.message);
                         res = false;
                     }
                 } else {
                     var status = xhr.status == 404 ? "Resource not found." : "Error status: " + xhr.status;
-                    console.log("JsLion.require(): Fail on loading script '" + script + "'. " + status);
+                    console.log("LionSoftJs.require(): Fail on loading script '" + script + "'. " + status);
                     res = false;
                 }
             }
         } else {
-            console.log("JsLion.require(): Fail on creating XMLHttpRequest");
+            console.log("LionSoftJs.require(): Fail on creating XMLHttpRequest");
             res = false;
         }
         return res;
@@ -85,13 +105,13 @@ var LionSoftJs;
     LionSoftJs.require = require;
 
     /**
-    Loads of the js-files via inserting <script> tag into DOM.
+    Loads of the js-file via inserting <script> tag into DOM.
     Callback function will be called when module is ready to using. (But you will be able to debug this module).
     Prevents double loading of the module.
     --
     Using:
-    >   1.  jsLion.load("dot.net.string.js") - load script from the dot.net-{version}.js folder.
-    >   2.  jsLion.load("/scripts/dot.net.string.js", function() { ... }) - load script from the site root folder.
+    >   1.  LionSoftJs.load("dot.net.string.js") - load script file from the script folder.
+    >   2.  LionSoftJs.load("/scripts/dot.net.string.js", function() { ... }) - load script file from the site root folder.
     */
     function load(script, callback) {
         script = updateScriptPath(script);
@@ -121,23 +141,6 @@ var LionSoftJs;
         currentScriptElement.parentNode.appendChild(scriptElement);
     }
     LionSoftJs.load = load;
-
-    function getBasePath() {
-        var scripts = document.getElementsByTagName("script"), src = scripts[scripts.length - 1].src, path = src.split('/');
-
-        var rootFile = path[path.length - 1];
-        var arr = rootFile.split('-');
-        if (arr.length < 2) {
-            LionSoftJs.version = "";
-        } else {
-            LionSoftJs.version = arr[arr.length - 1];
-            LionSoftJs.version = LionSoftJs.version.substring(0, LionSoftJs.version.length - 3); // remove .js extension
-        }
-
-        path[path.length - 1] = "";
-        return path.join('/');
-    }
-    LionSoftJs.getBasePath = getBasePath;
 
     function updateScriptPath(script) {
         if (script.slice(0, 1) != "/" && script.slice(0, 7).toLowerCase() != "http://" && script.slice(0, 8).toLowerCase() != "https://" && script.slice(0, 6).toLowerCase() != "ftp://") {
