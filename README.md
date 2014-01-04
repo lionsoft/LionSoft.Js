@@ -17,7 +17,7 @@ Recommended for using in `VisualStudio` (otherwise you don't need this library).
 
  * Dynamic loading scripts by two methods (sync and async).
  * Standard methods for working with strings. Implementation of the `String.cs`.
- * Sync'd row position across orientation changes.
+ * Helper methods for working with file path.
  * _To be continue..._
 
 ## Dependencies
@@ -36,7 +36,7 @@ As soon as you've got all the files downloaded you just need to include the only
 
 All the details you can read on the project [documentation site](https://github.com/lionsoft/LionSoft.Js/wiki/LionSoft.Js-Documentation).
 
-*Please see the `/sample` app for a more detailed code example of how to use the library.*
+*Please see the `LionSoft.Js.Tests` project for a more detailed code example of how to use the library.*
 
 ## Documentation
 
