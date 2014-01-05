@@ -156,3 +156,12 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/LionSoft.Js.Tests/LionSoft.Js/LionSoft.Js-0.1.1.js
+/LionSoft.Js.Tests/LionSoft.Js/js.net-0.1.1/js.net.array.js
+/LionSoft.Js.Tests/LionSoft.Js/js.net-0.1.1/js.net.path.js
+/LionSoft.Js.Tests/LionSoft.Js/js.net-0.1.1/js.net.string.js
+/LionSoft.Js.Tests/LionSoft.Js/js.net-0.1.1/string.format-1.0.js
+/packages/QUnit-MVC.1.6.2.0/QUnit-MVC.1.6.2.0.nupkg
+/packages/QUnit-MVC.1.6.2.0/QUnit-MVC.1.6.2.0.nuspec
+/packages/QUnit-MVC.1.6.2.0/content/Content/qunit.css
+/packages/QUnit-MVC.1.6.2.0/content/Scripts/qunit.js
