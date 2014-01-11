@@ -26,10 +26,12 @@
             var path = this;
             if (!basePath) {
                 if (path.StartsWith(separator)) {
-                    basePath = window.location.origin;
+                    basePath = window.location.appFolder;
                 } else {
                     basePath = window.location.href;
-                    if (!basePath.EndsWith('/'))
+                    // Do the assumption if href is not ends with separator and the last part of the path contains an extension - 
+                    // it's href to file name and we have to extract its folder.
+                    if (!basePath.EndsWith('/') && basePath.ExtractFileName().Contains('.'))
                         basePath = basePath.ExtractDirectory();
                 }
             }

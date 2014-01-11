@@ -1,4 +1,4 @@
-﻿/// <reference path="~/Scripts/qunit.js" />
+﻿/// <reference path="~/Scripts/qunit.js" /> - 
 /// <reference path="../LionSoft.Js/LionSoft.Js-0.1.1.js"/>
 /// <reference path="~/LionSoft.Js/js.net-0.1.1/js.net.string.js"/>
 
@@ -90,3 +90,64 @@ test('EndsWith()', function () {
     equals("".EndsWith("tIзt"), false, '9. Failed of empty string');
 });
 
+test('Contains()', function () {
+    equals("StringTeзt".Contains("Teз"), true, '1. Success case-sensitive checking (default param)');
+    equals("StringTeзt".Contains("Teз", false), true, '2. Success case-sensitive checking');
+    equals("StringTeзt".Contains("teЗ", true), true, '3. Success case-insensitive checking');
+
+    equals("StringTeзt".Contains("TeЗ"), false, '4. Failed case-sensitive checking (default param)');
+    equals("StringTeзt".Contains("TEз", false), false, '5. Failed case-sensitive checking');
+    equals("StringTeзt".Contains("tIз", true), false, '6. Failed case-insensitive checking');
+
+    equals("".EndsWith(""), true, '7. Success empty strings');
+    equals("test".EndsWith(""), true, '8. Success with empty string');
+    equals("".EndsWith("tIзt"), false, '9. Failed of empty string');
+});
+
+test('RegexIndexOf()', function () {
+    equals("StringTeзtTeз".RegexIndexOf("Teз"), 6, '1. Success - Case sensitive substring');
+    equals("StringTeзtTeз".RegexIndexOf(/teЗ/i), 6, '2. Success - Case insensitive substring');
+    equals("StringTeзtTeз".RegexIndexOf(/teЗ/i, 7), 10, '3. Success - Case insensitive substring + start index');
+
+    equals("StringTeзtTeз".RegexIndexOf(/teЗ/i, 12), -1, '4. Fail - Case insensitive substring + start index');
+    equals("StringTeзtTeз".RegexIndexOf(/teЗ/), -1, '5. Fail - Case sensitive substring');
+
+    equals("".RegexIndexOf(""), 0, '6. Success empty strings');
+    equals("test".RegexIndexOf(""), 0, '7. Success with empty string');
+    equals("".RegexIndexOf("tIзt"), -1, '8. Failed of empty string');
+});
+
+test('RegexLastIndexOf()', function () {
+    equals("StringTeзtTeз".RegexLastIndexOf("Teз"), 10, '1. Success - Case sensitive substring');
+    equals("StringTeзtTeз".RegexLastIndexOf(/teЗ/i), 10, '2. Success - Case insensitive substring');
+    equals("StringTeзtTeз".RegexLastIndexOf(/teЗ/i, 9), 6, '3. Success - Case insensitive substring + start index');
+
+    equals("StringTeзtTeз".RegexLastIndexOf(/teЗ/i, 5), -1, '4. Fail - Case insensitive substring + start index');
+    equals("StringTeзtTeз".RegexLastIndexOf(/teЗ/), -1, '5. Fail - Case sensitive substring');
+
+    equals("".RegexLastIndexOf(""), 0, '6. Success empty strings');
+    equals("test".RegexLastIndexOf(""), 4, '7. Success with empty string');
+    equals("".RegexLastIndexOf("tIзt"), -1, '8. Failed of empty string');
+});
+
+test('ToJson()', function () {
+    deepEqual('  {  "test1": 11,  "test2": "english", "test3": true } '.ToJson(), { test1: 11, test2: 'english', test3: true }, '0. ');
+    deepEqual("  {  test1: 11,  test2: \"русские буквы\", test3: true } ".ToJson(), { test1: 11, test2: 'русские буквы', test3: true }, '1. ');
+    deepEqual(("  {  \r\n" +
+        "test1: 11,  \r\n" +
+        "test2: \"русские буквы\", \r\n" +
+        "test3: true \r\n" +
+        "} ").ToJson(), { test1: 11, test2: 'русские буквы', test3: true }, '2. ');
+    deepEqual("    test1: 11,  test2: \"русские буквы\", test3: true  ".ToJson(), { test1: 11, test2: 'русские буквы', test3: true }, '3. ');
+    deepEqual(("    \r\n" +
+        "test1: 11,  \r\n" +
+        "test2: \"русские буквы\", \r\n" +
+        "test3: true \r\n" +
+        " ").ToJson(), { test1: 11, test2: 'русские буквы', test3: true }, '4. ');
+    deepEqual("    test1: 11,  test2: \"русские буквы\", test3: true } ".ToJson(), undefined, '5. ');
+    deepEqual("    test1: 11,  test2: \"русские буквы\", test3: true } ".ToJson({ fail: 1 }), { fail: 1 }, '6. ');
+    deepEqual("".ToJson(), undefined, '7. ');
+    deepEqual("".ToJson({ fail: 1 }), { fail: 1 }, '8. ');
+    deepEqual("[1, 2]".ToJson(), [1, 2], '9. ');
+    deepEqual("[111, {x:222, 'y':'ddd'}]".ToJson(), [111, { x: 222, y: 'ddd' }], '9. ');
+});

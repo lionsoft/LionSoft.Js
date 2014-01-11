@@ -22,15 +22,16 @@ test('ExtractFileName()', function () {
 });
 
 test('ExpandPath()', function () {
-    var siteOrigin = window.location.protocol + "//" + window.location.host;
     var currentHref = window.location.href;
     if (currentHref.EndsWith(".html", true)) {
         currentHref = currentHref.ExtractDirectory();
     }
-    equals("/test".ExpandPath(), siteOrigin.TrimEnd('/') + "/test", '"/test".ExpandPath() - Success expand path from the site origin');
-    equals("test".ExpandPath(), currentHref.TrimEnd('/') + "/test", '"test".ExpandPath() - Success expand path from the current location (doesn\'t work in Resharper tests)');
-    equals("test".ExpandPath("http://base.path/"), "http://base.path/test", '"test".ExpandPath("http://base.path/") - Success expand path from the base path with separator on the end');
-    equals("test".ExpandPath("http://base.path"), "http://base.path/test", '"test".ExpandPath("http://base.path") - Success expand path from the base path w/o separator on the end');
-    equals("/test".ExpandPath("http://base.path/"), "http://base.path/test", '"/test".ExpandPath("http://base.path/") - Success expand path from the base path with separator on the end');
-    equals("/test".ExpandPath("http://base.path"), "http://base.path/test", '"/test".ExpandPath("http://base.path") - Success expand path from the base path w/o separator on the end');
+    equals("/test".ExpandPath(), LionSoftJs.appFolder.TrimEnd('/') + "/test", '"/test".ExpandPath() - Expand path from the site origin');
+    equals("test".ExpandPath(), currentHref.TrimEnd('/') + "/test", '"test".ExpandPath() - Expand path from the current location (doesn\'t work in Resharper tests)');
+    equals("test".ExpandPath("http://base.path/"), "http://base.path/test", '"test".ExpandPath("http://base.path/") - Expand path from the base path with separator on the end');
+    equals("test".ExpandPath("http://base.path"), "http://base.path/test", '"test".ExpandPath("http://base.path") - Expand path from the base path w/o separator on the end');
+    equals("/test".ExpandPath("http://base.path/"), "http://base.path/test", '"/test".ExpandPath("http://base.path/") - Expand path from the base path with separator on the end');
+    equals("/test".ExpandPath("http://base.path"), "http://base.path/test", '"/test".ExpandPath("http://base.path") - Expand path from the base path w/o separator on the end');
+    equals("test".ExpandPath("http://base.path/folder/"), "http://base.path/folder/test", '"test".ExpandPath("http://base.path/folder") - Expand path from the base path with subfolder with separator on the end');
+    equals("test".ExpandPath("http://base.path/folder"), "http://base.path/folder/test", '"test".ExpandPath("http://base.path/folder") - Expand path from the base path with subfolder w/o separator on the end');
 });

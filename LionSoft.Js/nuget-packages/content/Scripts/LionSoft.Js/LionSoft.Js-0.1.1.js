@@ -1,16 +1,89 @@
+/**
+Returns true if the object is not undefined and is not null.
+*/
+function isAssigned(obj) {
+    return obj !== undefined && obj !== null;
+}
+
 var LionSoftJs;
 (function (LionSoftJs) {
     'use strict';
 
     /**
-    Current root folder of the LionSoft.Js-{version}.js
+    Gets the folder of the LionSoft.Js-{version}.js script with trailing separator, eg. http[s]://server.name[:port][/appFolder]/Scripts/LionSoft.Js/
     */
-    LionSoftJs.rootFolder;
+    LionSoftJs.scriptFolder;
+
+    /**
+    Gets the application folder with trailing separator, eg. http[s]://server.name[:port][/appFolder]/
+    
+    Note: Script file must be placed to the default folder ~/Scripts/LionSoft.Js.
+    Searching is processed in three steps:
+    1. If LionSoftJs.scriptFolder is %appFolder%/Scripts/LionSoft.Js
+    2. or if LionSoftJs.scriptFolder is %appFolder%/Scripts/<other>
+    3. or if LionSoftJs.scriptFolder is %appFolder%/LionSoft.Js
+    otherwise appFolder will be equal window.location.origin
+    */
+    LionSoftJs.appFolder;
 
     /**
     Current version of the framework library.
     */
     LionSoftJs.version;
+
+    /**
+    Gets cookie value.
+    */
+    function getCookie(name, defValue) {
+        var matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"));
+        return matches ? decodeURIComponent(matches[1]) : defValue;
+    }
+    LionSoftJs.getCookie = getCookie;
+
+    /**
+    Sets cookie value and its options.
+    --
+    Using:
+    >   LionSoftJs.setCookie("myCookie", value, {expires: 10, path: "/", }) - set site cookie for 10 seconds
+    */
+    function setCookie(name, value, options) {
+        options = options || {};
+        options.path = options.path || "/";
+
+        var expires = options.expires;
+
+        if (typeof expires == "number" && expires) {
+            var d = new Date();
+            d.setTime(d.getTime() + expires * 1000);
+            expires = options.expires = d;
+        }
+        if (expires && expires.toUTCString) {
+            options.expires = expires.toUTCString();
+        }
+
+        value = encodeURIComponent(value);
+
+        var updatedCookie = name + "=" + value;
+
+        for (var propName in options) {
+            updatedCookie += "; " + propName;
+            var propValue = options[propName];
+            if (propValue !== true) {
+                updatedCookie += "=" + propValue;
+            }
+        }
+
+        document.cookie = updatedCookie;
+    }
+    LionSoftJs.setCookie = setCookie;
+
+    /**
+    Removes the cookie.
+    */
+    function deleteCookie(name) {
+        setCookie(name, "", { expires: -1 });
+    }
+    LionSoftJs.deleteCookie = deleteCookie;
 
     /**
     Cross-browser gets of the XMLHttpRequest object
@@ -50,7 +123,9 @@ var LionSoftJs;
             LionSoftJs.version = LionSoftJs.version.substring(0, LionSoftJs.version.length - 3); // remove .js extension
         }
 
-        path[path.length - 1] = "";
+        path[path.length - 1] = undefined;
+
+        // path.length--;
         return path.join('/');
     }
     LionSoftJs.getBasePath = getBasePath;
@@ -114,31 +189,44 @@ var LionSoftJs;
     >   2.  LionSoftJs.load("/scripts/dot.net.string.js", function() { ... }) - load script file from the site root folder.
     */
     function load(script, callback) {
+        var res = new DefferedObject();
         script = updateScriptPath(script);
-        if (loadingJs.indexOf(script) != -1 || loadedJs.indexOf(script) != -1)
-            return;
+        if (loadingJs.indexOf(script) != -1 || loadedJs.indexOf(script) != -1) {
+            res.invoke();
+            return res;
+        }
         loadingJs.push(script);
 
         var scriptElement = document.createElement("script");
         scriptElement.type = "text/javascript";
         scriptElement.src = script;
 
+        var onLoad = function (readyState) {
+            if (readyState == "complete") {
+                loadedJs.push(script);
+                scriptElement.onreadystatechange = null;
+                scriptElement.onload = null;
+                if (callback != null)
+                    callback();
+                res.invoke();
+            }
+        };
+
         // Then bind the event to the callback function.
         // There are several events for cross browser compatibility.
         scriptElement.onreadystatechange = function () {
-            loadedJs.push(script);
-            scriptElement.onreadystatechange = null;
-            scriptElement.onload = null;
-            if (callback != null)
-                callback();
+            return onLoad(scriptElement.readyState);
         };
-        scriptElement.onload = scriptElement.onreadystatechange;
+        scriptElement.onload = function () {
+            return onLoad("complete");
+        };
 
         // Adding the script tag after the current <script> section
         var scripts = document.getElementsByTagName("script"), currentScriptElement = scripts[scripts.length - 1];
 
         // Fire the loading
         currentScriptElement.parentNode.appendChild(scriptElement);
+        return res;
     }
     LionSoftJs.load = load;
 
@@ -158,6 +246,35 @@ var LionSoftJs;
         return script;
     }
 
+    var DefferedObject = (function () {
+        function DefferedObject() {
+        }
+        DefferedObject.prototype.invoke = function () {
+            var _this = this;
+            if (this._action != undefined) {
+                var res = this._action();
+                if (res == undefined || res["then"] == undefined)
+                    this._defObj.invoke();
+                else {
+                    res["then"](function () {
+                        return _this._defObj.invoke();
+                    });
+                }
+            }
+            this._invoked = true;
+        };
+
+        DefferedObject.prototype.then = function (action) {
+            this._action = action;
+            this._defObj = new DefferedObject();
+            var res = this._defObj;
+            if (this._invoked)
+                this.invoke();
+            return res;
+        };
+        return DefferedObject;
+    })();
+
     // List of the loaded scripts
     var loadedJs = [];
     var loadingJs = [];
@@ -176,16 +293,33 @@ var LionSoftJs;
 
     path[path.length - 1] = "";
 
-    LionSoftJs.rootFolder = path.join('/');
+    //    path.length--;
+    LionSoftJs.scriptFolder = path.join('/');
 
     // Set window.location.origin
     if (!window.location.origin)
         window.location.origin = window.location.protocol + "//" + window.location.host;
 
     /* Loading LionSoft.Js framework modules */
-    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.string.js");
-    require(LionSoftJs.rootFolder + "js.net-{version}/string.format-1.0.js");
-    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.array.js");
-    require(LionSoftJs.rootFolder + "js.net-{version}/js.net.path.js");
+    require(LionSoftJs.scriptFolder + "js.net-{version}/js.net.string.js");
+    require(LionSoftJs.scriptFolder + "js.net-{version}/string.format-1.0.js");
+    require(LionSoftJs.scriptFolder + "js.net-{version}/js.net.AsConvert.js");
+    require(LionSoftJs.scriptFolder + "js.net-{version}/js.net.array.js");
+
+    // Set window.location.appFolder
+    var idx = LionSoftJs.scriptFolder.EndsWith("/Scripts/LionSoft.Js/", true) ? LionSoftJs.scriptFolder.toLowerCase().lastIndexOf("/scripts/lionsoft.js/") : -1;
+    if (idx == -1)
+        idx = LionSoftJs.scriptFolder.toLowerCase().indexOf("/scripts/");
+    if (idx == -1)
+        idx = LionSoftJs.scriptFolder.EndsWith("/LionSoft.Js/") ? LionSoftJs.scriptFolder.toLowerCase().lastIndexOf("/lionsoft.js/") : -1;
+    if (idx == -1) {
+        window.location.appFolder = window.location.origin + "/";
+    } else {
+        window.location.appFolder = LionSoftJs.scriptFolder.slice(0, idx) + "/";
+    }
+
+    LionSoftJs.appFolder = window.location.appFolder;
+
+    require(LionSoftJs.scriptFolder + "js.net-{version}/js.net.path.js");
 })(LionSoftJs || (LionSoftJs = {}));
 //# sourceMappingURL=LionSoft.Js-0.1.1.js.map
